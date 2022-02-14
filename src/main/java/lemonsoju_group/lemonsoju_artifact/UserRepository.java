@@ -1,5 +1,6 @@
 package lemonsoju_group.lemonsoju_artifact;
 
+import lemonsoju_group.lemonsoju_artifact.domain.User;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
