@@ -5,6 +5,8 @@ import lombok.Setter;
 
 import javax.persistence.*;
 
+import static javax.persistence.FetchType.*;
+
 @Entity
 @Setter @Getter
 public class Basket {
@@ -13,15 +15,20 @@ public class Basket {
     @Column(name = "basket_id")
     private Long id;
 
-    @OneToOne
+    @OneToOne(fetch = LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToOne
+    @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "item_id")
     private Item item;
 
-
     private int basketPrice;
 
+    //== 연관관계 메서드 ==//
+
+    public void setUser(User user){
+        this.user = user; // User를 Basket에 저장
+        user.setBasket(this); // Basket을 User에 저장
+    }
 }
