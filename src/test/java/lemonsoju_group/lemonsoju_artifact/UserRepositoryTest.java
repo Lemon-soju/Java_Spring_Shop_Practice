@@ -1,6 +1,7 @@
 package lemonsoju_group.lemonsoju_artifact;
 
 
+import lemonsoju_group.lemonsoju_artifact.domain.User;
 import org.assertj.core.api.Assertions;
 import org.junit.Test;
 import org.junit.runner.RunWith;
