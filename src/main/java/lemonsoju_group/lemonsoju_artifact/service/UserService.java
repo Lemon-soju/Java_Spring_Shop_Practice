@@ -3,7 +3,6 @@ package lemonsoju_group.lemonsoju_artifact.service;
 import lemonsoju_group.lemonsoju_artifact.domain.User;
 import lemonsoju_group.lemonsoju_artifact.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
