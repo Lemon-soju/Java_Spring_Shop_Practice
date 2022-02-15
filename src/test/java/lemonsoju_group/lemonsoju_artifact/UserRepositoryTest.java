@@ -2,6 +2,7 @@ package lemonsoju_group.lemonsoju_artifact;
 
 
 import lemonsoju_group.lemonsoju_artifact.domain.User;
+import lemonsoju_group.lemonsoju_artifact.repository.UserRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -15,7 +16,8 @@ import org.springframework.transaction.annotation.Transactional;
 @SpringBootTest
 public class UserRepositoryTest {
 
-    @Autowired UserRepository userRepository;
+    @Autowired
+    UserRepository userRepository;
 
     @Test
     @Transactional
