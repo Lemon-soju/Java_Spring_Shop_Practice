@@ -1,24 +1,24 @@
 package lemonsoju_group.lemonsoju_artifact.repository;
 
 import lemonsoju_group.lemonsoju_artifact.domain.User;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import java.util.List;
 
 @Repository
+@RequiredArgsConstructor
 public class UserRepository {
 
-    @PersistenceContext
-    private EntityManager em;
+    private final EntityManager em;
 
     public Long save(User user){
         em.persist(user);
         return user.getId();
     }
 
-    public User find(Long id){
+    public User findOne(Long id){
         return em.find(User.class, id);
     }
 
