@@ -19,6 +19,7 @@ public class User {
     private String point;
     private String rank;
 
+
     @OneToMany(mappedBy = "user") // 연관관계에서 slave로 맵핑됨
     private List<Order> orders = new ArrayList<>();
 
