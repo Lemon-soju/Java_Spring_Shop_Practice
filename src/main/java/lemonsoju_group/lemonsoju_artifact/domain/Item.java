@@ -1,5 +1,6 @@
 package lemonsoju_group.lemonsoju_artifact.domain;
 
+import lemonsoju_group.lemonsoju_artifact.exception.NotEnoughStockException;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -19,4 +20,18 @@ public class Item {
     private String name;
     private int price;
     private int stockQuantity;
+
+    //==비즈니스 로직==//
+    public void addStock(int quantity) {
+        this.stockQuantity += quantity;
+    }
+
+    public void removeStock(int quantity) {
+        int restStock = this.stockQuantity - quantity;
+        if (restStock < 0) {
+            throw new NotEnoughStockException("need more stock");
+        }
+        this.stockQuantity = restStock;
+    }
+
 }
