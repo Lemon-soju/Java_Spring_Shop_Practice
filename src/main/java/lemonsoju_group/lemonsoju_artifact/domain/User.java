@@ -14,6 +14,7 @@ public class User {
     @Id @GeneratedValue
     @Column(name = "user_id")
     private Long id;
+    private String uid;
     private String pwd;
     private String name;
     private String point;

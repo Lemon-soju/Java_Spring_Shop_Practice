@@ -27,7 +27,7 @@ public class OrderRepository {
     // 이후 수정할 예정
     public List<Order> findAllByString(OrderSearch orderSearch) {
         //language=JPAQL
-        String jpql = "select o From Order o join o.member m";
+        String jpql = "select o From Order o join o.user m";
         boolean isFirstCondition = true;
         //주문 상태 검색
         if (orderSearch.getOrderStatus() != null) {
