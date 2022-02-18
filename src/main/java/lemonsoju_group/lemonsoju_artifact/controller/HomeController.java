@@ -24,6 +24,12 @@ public class HomeController {
         return "home";
     }
 
+    @GetMapping("/main")
+    public String main()
+    {
+        return "main";
+    }
+
     @GetMapping("/login")
     public String login(Model model){
         model.addAttribute("loginForm", new LoginForm());
