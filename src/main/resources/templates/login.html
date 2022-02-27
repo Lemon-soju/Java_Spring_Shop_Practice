@@ -1,37 +1,23 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragments/header :: header" />
-<style>
- .fieldError {
- border-color: #bd2130;
- }
-</style>
+<head th:replace="fragments/header :: header">
+    <title>Hello</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
 <body>
 <div class="container">
-    <div th:replace="fragments/bodyHeader :: bodyHeader"/>
-    <form role="form" action="/login" th:object="${loginForm}"
-          method="post">
-        <div class="form-group">
-            <label th:for="id">id</label>
-            <input type="text" th:field="*{uid}" class="form-control"
-                   placeholder="Id를 입력하세요"
-                   th:class="${#fields.hasErrors('uid')}? 'form-control
-fieldError' : 'form-control'">
-            <p th:if="${#fields.hasErrors('uid')}"
-               th:errors="*{uid}">Incorrect date</p>
-        </div>
-        <div class="form-group">
-            <label th:for="pwd">pwd</label>
-            <input type="text" th:field="*{pwd}" class="form-control"
-                   placeholder="비밀번호를 입력하세요"
-                   th:class="${#fields.hasErrors('pwd')}? 'form-control
-fieldError' : 'form-control'">
-            <p th:if="${#fields.hasErrors('pwd')}"
-               th:errors="*{pwd}">Incorrect date</p>
-        </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
-    <br/>
+<!--    <div th:replace="fragments/bodyHeader :: bodyHeader" />-->
+    <div class="jumbotron">
+        <h1>HELLO SHOP</h1>
+        <p class="lead">회원 기능</p>
+        <p>
+            <a class="btn btn-lg btn-secondary" href="/users/new">회원 가입</a>
+        </p>
+        <p class="lead">로그인</p>
+        <p>
+            <a class="btn btn-lg btn-dark" href="/login">로그인</a>
+        </p>
+    </div>
     <div th:replace="fragments/footer :: footer" />
 </div> <!-- /container -->
 </body>
