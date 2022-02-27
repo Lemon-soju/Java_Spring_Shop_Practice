@@ -1,5 +1,7 @@
 package lemonsoju_group.lemonsoju_artifact.controller;
 
+import lemonsoju_group.lemonsoju_artifact.domain.User;
+import lemonsoju_group.lemonsoju_artifact.service.LoginService;
 import lemonsoju_group.lemonsoju_artifact.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,17 +19,17 @@ import javax.validation.Valid;
 @Slf4j
 public class HomeController {
 
-    private final UserService userService;
+    private final LoginService loginService;
 
     @RequestMapping("/")
     public String login(){
         return "login";
     }
 
-    @GetMapping("/main")
+    @GetMapping("/home")
     public String main()
     {
-        return "main";
+        return "home";
     }
 
     @GetMapping("/login")
@@ -43,10 +45,15 @@ public class HomeController {
         if (result.hasErrors()){
             return "loginForm";
         }
-        if (userService.loginValid(form.getUid(), form.getPwd())){
-            return "main";
+
+        User loginUser = loginService.login(form.getUid(), form.getPwd());
+
+        if (loginUser == null){
+            result.reject("loginFail", "아이디 또는 비밀번호가 맞지 않습니다.");
+            return "loginForm";
         }
-        return "redirect:/loginForm";
+
+        return "redirect:/home";
     }
 
 }

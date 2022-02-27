@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 import static java.lang.Boolean.TRUE;
 
@@ -30,26 +31,10 @@ public class UserService {
     }
 
     private void validateDuplicateUser(User user) {
-        List<User> findUsers = userRepository.findByUid(user.getUid());
+        Optional<User> findUsers = userRepository.findByUid(user.getUid());
         if (!findUsers.isEmpty()) {
-            throw new IllegalStateException("이미 존재하는 회원입니다");
+            throw new IllegalStateException("Already Existing User");
         }
-    }
-
-    /**
-     * 로그인 검증 구현 ===========> 이후 로그인에 실패한 경우 문구를 출력하도록 구현할 예정
-     */
-    public Boolean loginValid(String uid, String pwd){
-        List<User> findUsers = userRepository.findByUid(uid);
-        if (findUsers.isEmpty()){
-            return false;
-        }
-        log.info(findUsers.get(0).getPwd());
-        log.info(pwd);
-        if(findUsers.get(0).getPwd().equals(pwd)){
-                return TRUE;
-        }
-        return false;
     }
 
     /**

@@ -29,6 +29,10 @@ fieldError' : 'form-control'">
             <p th:if="${#fields.hasErrors('pwd')}"
                th:errors="*{pwd}">Incorrect date</p>
         </div>
+        <div th:if="${#fields.hasGlobalErrors()}">
+            <p class="field-error" th:each="err : ${#fields.globalErrors()}"
+               th:text="${err}">전체 오류 메시지</p>
+        </div>
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
     <br/>

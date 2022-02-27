@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
@@ -22,10 +23,11 @@ public class UserRepository {
         return em.find(User.class, id);
     }
 
-    public List<User> findByUid(String uid){
+    public Optional<User> findByUid(String uid){
         return em.createQuery("select u from User u where u.uid = :uid", User.class)
                 .setParameter("uid", uid)
-                .getResultList();
+                .getResultList()
+                .stream().findFirst();
     }
 
     public List<User> findAll(){
