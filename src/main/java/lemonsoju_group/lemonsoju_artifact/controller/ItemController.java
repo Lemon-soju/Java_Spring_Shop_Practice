@@ -33,7 +33,7 @@ public class ItemController {
         item.setStockQuantity(form.getStockQuantity());
 
         itemService.saveItem(item);
-        return "/main";
+        return "/home";
     }
 
     @GetMapping("/items")
