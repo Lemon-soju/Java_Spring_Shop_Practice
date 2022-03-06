@@ -31,4 +31,15 @@ public class Basket {
         this.user = user; // User를 Basket에 저장
         user.setBasket(this); // Basket을 User에 저장
     }
+
+    //== 생성 메서드 ==//
+    public static Basket createBasket(User user, Item item, int price){
+        Basket basket = new Basket();
+        basket.setUser(user);
+        basket.setItem(item);
+        basket.setBasketPrice(price);
+        return basket;
+    }
+
+
 }

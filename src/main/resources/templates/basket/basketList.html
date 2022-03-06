@@ -1,0 +1,33 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header" />
+<body>
+<div class="container">
+    <div th:replace="fragments/bodyHeader :: bodyHeader"/>
+    <div>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>상품명</th>
+                <th>가격</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="basket : ${baskets}">
+                <td th:text="${basket.id}"></td>
+                <td th:text="${basket.item.name}"></td>
+                <td th:text="${basket.item.price}"></td>
+                <td>
+                    <a href="#" th:href="@{/basket/{id}/delete (id=${basket.id})}"
+                       class="btn btn-primary" role="button">삭제</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div th:replace="fragments/footer :: footer"/>
+</div> <!-- /container -->
+</body>
+</html>
