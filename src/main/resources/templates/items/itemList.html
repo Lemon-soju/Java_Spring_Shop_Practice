@@ -12,6 +12,7 @@
                 <th>상품명</th>
                 <th>가격</th>
                 <th>재고수량</th>
+                <th>장바구니</th>
                 <th></th>
             </tr>
             </thead>
@@ -21,6 +22,14 @@
                 <td th:text="${item.name}"></td>
                 <td th:text="${item.price}"></td>
                 <td th:text="${item.stockQuantity}"></td>
+
+                <!-- 장바구니 기능 추가 -->
+                <td>
+                    <a href="#" th:href="@{/basket/{id}/add (id=${item.id})}"
+                       class="btn btn-primary" role="button">추가</a>
+                </td>
+                <!--                -->
+
                 <td>
                     <a href="#" th:href="@{/items/{id}/edit (id=${item.id})}"
                        class="btn btn-primary" role="button">수정</a>
