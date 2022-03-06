@@ -1,13 +1,18 @@
 package lemonsoju_group.lemonsoju_artifact.controller;
 
+import lemonsoju_group.lemonsoju_artifact.SessionConst;
 import lemonsoju_group.lemonsoju_artifact.domain.Basket;
+import lemonsoju_group.lemonsoju_artifact.domain.Item;
+import lemonsoju_group.lemonsoju_artifact.domain.User;
 import lemonsoju_group.lemonsoju_artifact.service.BasketService;
+import lemonsoju_group.lemonsoju_artifact.service.ItemService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.SessionAttribute;
 
 import java.util.List;
 
@@ -17,7 +22,7 @@ import java.util.List;
 public class BasketController {
 
     private final BasketService basketService;
-
+    private final ItemService itemService;
 
     @GetMapping("/basket")
     public String list(Model model) {
@@ -31,9 +36,20 @@ public class BasketController {
      */
     @GetMapping("/basket/{basketId}/delete")
     public String deleteBasket(@PathVariable("basketId") Long basketId, Model model){
-        log.info("hello");
         Basket basket = basketService.findOne(basketId);
         basketService.delete(basket);
+        return "redirect:/basket";
+    }
+
+    /**
+     * 장바구니 추가
+     */
+    @GetMapping("/basket/{itemId}/add")
+    public String addBasket(@SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser,
+                            @PathVariable("itemId") Long itemId, Model model){
+
+        Item item = itemService.findOne(itemId);
+        basketService.addBasket(loginUser, item, 1);
 
         return "redirect:/basket";
     }
