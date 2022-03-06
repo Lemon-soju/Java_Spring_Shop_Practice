@@ -1,9 +1,11 @@
 package lemonsoju_group.lemonsoju_artifact;
 
+import lemonsoju_group.lemonsoju_artifact.domain.Basket;
 import lemonsoju_group.lemonsoju_artifact.domain.Item;
 import lemonsoju_group.lemonsoju_artifact.domain.User;
 import lemonsoju_group.lemonsoju_artifact.repository.ItemRepository;
 import lemonsoju_group.lemonsoju_artifact.repository.UserRepository;
+import lemonsoju_group.lemonsoju_artifact.service.BasketService;
 import lemonsoju_group.lemonsoju_artifact.service.ItemService;
 import lemonsoju_group.lemonsoju_artifact.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +20,7 @@ public class TestDataInit {
 
     private final ItemService itemService;
     private final UserService userService;
+    private final BasketService basketService;
 
     /**
      * 테스트용 데이터 추가
@@ -51,5 +54,14 @@ public class TestDataInit {
 
         itemService.saveItem(itemA);
         itemService.saveItem(itemB);
+
+        /**
+         * 장바구니 추가
+         */
+
+        Basket basketA = new Basket();
+        basketA.setBasketPrice(itemA.getPrice());
+
+        basketService.addBasket(userA, itemA, 2);
     }
 }
