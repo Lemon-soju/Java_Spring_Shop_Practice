@@ -24,6 +24,7 @@ public class Basket {
     private Item item;
 
     private int basketPrice;
+    private int count;
 
     //== 연관관계 메서드 ==//
 
@@ -33,11 +34,12 @@ public class Basket {
     }
 
     //== 생성 메서드 ==//
-    public static Basket createBasket(User user, Item item, int price){
+    public static Basket createBasket(User user, Item item, int price, int count){
         Basket basket = new Basket();
         basket.setUser(user);
         basket.setItem(item);
         basket.setBasketPrice(price);
+        basket.setCount(count);
         return basket;
     }
 
