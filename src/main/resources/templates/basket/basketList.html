@@ -12,6 +12,7 @@
                 <th>#</th>
                 <th>상품명</th>
                 <th>가격</th>
+                <th>수량</th>
                 <th></th>
             </tr>
             </thead>
@@ -20,6 +21,7 @@
                 <td th:text="${basket.id}"></td>
                 <td th:text="${basket.item.name}"></td>
                 <td th:text="${basket.item.price}"></td>
+                <td th:text="${basket.count}"></td>
                 <td>
                     <a href="#" th:href="@{/basket/{id}/delete (id=${basket.id})}"
                        class="btn btn-primary" role="button">삭제</a>

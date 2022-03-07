@@ -6,11 +6,14 @@ import lemonsoju_group.lemonsoju_artifact.repository.ItemRepository;
 import lemonsoju_group.lemonsoju_artifact.repository.OrderRepository;
 import lemonsoju_group.lemonsoju_artifact.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
+@Slf4j
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
@@ -24,15 +27,22 @@ public class BasketService {
      * 장바구니 추가
      */
     @Transactional
-    public Long addBasket(User user, Item item, int count){
+    public void addBasket(User user, Item item){
 
-        // 주문생성
-        Basket basket = Basket.createBasket(user, item, item.getPrice());
+        Optional<Basket> findBasket = basketRepository.findOneByItem(item.getId());
 
-        // 주문 저장
-        basketRepository.save(basket);
-
-        return basket.getId();
+        if (!findBasket.isEmpty()){
+            log.info("1111");
+            Basket basket = findBasket.get();
+            int count = basket.getCount() + 1;
+            basket.setCount(count);
+            basketRepository.save(basket);
+        }
+        else {
+            log.info("2222");
+            Basket basket = Basket.createBasket(user, item, item.getPrice(), 1);
+            basketRepository.save(basket);
+        }
     }
 
     public List<Basket> findBaskets() {

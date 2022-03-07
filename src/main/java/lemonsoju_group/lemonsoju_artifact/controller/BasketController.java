@@ -49,7 +49,7 @@ public class BasketController {
                             @PathVariable("itemId") Long itemId, Model model){
 
         Item item = itemService.findOne(itemId);
-        basketService.addBasket(loginUser, item, 1);
+        basketService.addBasket(loginUser, item);
 
         return "redirect:/basket";
     }
