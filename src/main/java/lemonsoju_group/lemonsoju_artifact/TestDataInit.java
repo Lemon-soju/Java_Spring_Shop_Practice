@@ -62,6 +62,6 @@ public class TestDataInit {
         Basket basketA = new Basket();
         basketA.setBasketPrice(itemA.getPrice());
 
-        basketService.addBasket(userA, itemA);
+        basketService.addBasket(userA.getId(), itemA.getId());
     }
 }

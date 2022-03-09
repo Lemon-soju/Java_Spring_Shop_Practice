@@ -47,10 +47,7 @@ public class BasketController {
     @GetMapping("/basket/{itemId}/add")
     public String addBasket(@SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser,
                             @PathVariable("itemId") Long itemId, Model model){
-
-        Item item = itemService.findOne(itemId);
-        basketService.addBasket(loginUser, item);
-
+        basketService.addBasket(loginUser.getId(), itemId);
         return "redirect:/basket";
     }
 }

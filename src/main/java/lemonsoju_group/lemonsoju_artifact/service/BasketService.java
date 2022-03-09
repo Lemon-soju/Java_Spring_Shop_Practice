@@ -19,27 +19,28 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class BasketService {
 
+    private final BasketRepository basketRepository;
     private final UserRepository userRepository;
     private final ItemRepository itemRepository;
-    private final BasketRepository basketRepository;
 
     /**
      * 장바구니 추가
      */
-    @Transactional
-    public void addBasket(User user, Item item){
 
-        Optional<Basket> findBasket = basketRepository.findOneByItem(item.getId());
+    @Transactional
+    public void addBasket(Long userId, Long itemId){
+
+        Optional<Basket> findBasket = basketRepository.findOneByItem(itemId);
+        User user = userRepository.findOne(userId);
+        Item item = itemRepository.findOne(itemId);
 
         if (!findBasket.isEmpty()){
-            log.info("1111");
             Basket basket = findBasket.get();
             int count = basket.getCount() + 1;
             basket.setCount(count);
             basketRepository.save(basket);
         }
         else {
-            log.info("2222");
             Basket basket = Basket.createBasket(user, item, item.getPrice(), 1);
             basketRepository.save(basket);
         }
