@@ -15,7 +15,7 @@ public class Basket {
     @Column(name = "basket_id")
     private Long id;
 
-    @OneToOne(fetch = LAZY)
+    @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 
@@ -30,7 +30,7 @@ public class Basket {
 
     public void setUser(User user){
         this.user = user; // User를 Basket에 저장
-        user.setBasket(this); // Basket을 User에 저장
+        user.getBasket().add(this); // Basket을 User에 저장
     }
 
     //== 생성 메서드 ==//

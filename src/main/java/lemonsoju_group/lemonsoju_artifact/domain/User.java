@@ -24,6 +24,6 @@ public class User {
     @OneToMany(mappedBy = "user") // 연관관계에서 slave로 맵핑됨
     private List<Order> orders = new ArrayList<>();
 
-    @OneToOne(mappedBy = "user")
-    private Basket basket;
+    @OneToMany(mappedBy = "user")
+    private List<Basket> basket = new ArrayList<>();
 }
