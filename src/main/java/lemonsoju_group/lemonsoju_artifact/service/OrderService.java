@@ -6,10 +6,13 @@ import lemonsoju_group.lemonsoju_artifact.domain.OrderItem;
 import lemonsoju_group.lemonsoju_artifact.domain.User;
 import lemonsoju_group.lemonsoju_artifact.repository.ItemRepository;
 import lemonsoju_group.lemonsoju_artifact.repository.OrderRepository;
+import lemonsoju_group.lemonsoju_artifact.repository.OrderSearch;
 import lemonsoju_group.lemonsoju_artifact.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @Transactional(readOnly = true)
@@ -51,6 +54,10 @@ public class OrderService {
         Order order = orderRepository.findOne(orderId);
         // 주문 취소
         order.cancel();
+    }
+
+    public List<Order> findOrders(OrderSearch orderSearch){
+        return orderRepository.findAllByString(orderSearch);
     }
 
 }

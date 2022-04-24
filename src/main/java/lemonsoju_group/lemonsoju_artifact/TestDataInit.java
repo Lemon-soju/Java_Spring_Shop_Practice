@@ -2,17 +2,20 @@ package lemonsoju_group.lemonsoju_artifact;
 
 import lemonsoju_group.lemonsoju_artifact.domain.Basket;
 import lemonsoju_group.lemonsoju_artifact.domain.Item;
+import lemonsoju_group.lemonsoju_artifact.domain.OrderItem;
 import lemonsoju_group.lemonsoju_artifact.domain.User;
 import lemonsoju_group.lemonsoju_artifact.repository.ItemRepository;
 import lemonsoju_group.lemonsoju_artifact.repository.UserRepository;
 import lemonsoju_group.lemonsoju_artifact.service.BasketService;
 import lemonsoju_group.lemonsoju_artifact.service.ItemService;
+import lemonsoju_group.lemonsoju_artifact.service.OrderService;
 import lemonsoju_group.lemonsoju_artifact.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
+import javax.persistence.criteria.Order;
 
 @Component
 @RequiredArgsConstructor
@@ -21,6 +24,7 @@ public class TestDataInit {
     private final ItemService itemService;
     private final UserService userService;
     private final BasketService basketService;
+    private final OrderService orderService;
 
     /**
      * 테스트용 데이터 추가
@@ -34,9 +38,14 @@ public class TestDataInit {
         User userA = new User();
         userA.setUid("lemon");
         userA.setPwd("asd123");
-        userA.setName("lemon_soju");
-
+        userA.setName("james");
         userService.join(userA);
+
+        User userB = new User();
+        userB.setUid("lemon2");
+        userB.setPwd("asd123");
+        userB.setName("tom");
+        userService.join(userB);
 
 
         /**
@@ -54,6 +63,12 @@ public class TestDataInit {
 
         itemService.saveItem(itemA);
         itemService.saveItem(itemB);
+
+        /**
+         * 테스트 주문 추가
+         */
+
+        orderService.order(userA.getId(), itemA.getId(), 5);
 
         /**
          * 장바구니 추가
