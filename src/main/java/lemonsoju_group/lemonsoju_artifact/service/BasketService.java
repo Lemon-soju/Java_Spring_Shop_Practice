@@ -1,7 +1,7 @@
 package lemonsoju_group.lemonsoju_artifact.service;
 
 import lemonsoju_group.lemonsoju_artifact.domain.*;
-import lemonsoju_group.lemonsoju_artifact.repository.BasketRepository;
+import lemonsoju_group.lemonsoju_artifact.repository.BasketDataRepository;
 import lemonsoju_group.lemonsoju_artifact.repository.ItemDataRepository;
 import lemonsoju_group.lemonsoju_artifact.repository.UserDataRepository;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +18,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class BasketService {
 
-    private final BasketRepository basketRepository;
+    private final BasketDataRepository basketRepository;
     private final UserDataRepository userRepository;
     private final ItemDataRepository itemRepository;
 
@@ -29,9 +29,9 @@ public class BasketService {
     @Transactional
     public void addBasket(Long userId, Long itemId){
 
-        Optional<Basket> findBasket = basketRepository.findOneByItemAndUser(userId, itemId);
         User user = userRepository.findById(userId).orElse(null);
         Item item = itemRepository.findById(itemId).orElse(null);
+        Optional<Basket> findBasket = basketRepository.findOneByUserAndItem(user, item);
 
         if (!findBasket.isEmpty()){
             Basket basket = findBasket.orElse(null);
@@ -44,12 +44,12 @@ public class BasketService {
         }
     }
 
-    public List<Basket> findBaskets(Long userId) {
-        return basketRepository.findAllByUser(userId);
+    public List<Basket> findBaskets(User user) {
+        return basketRepository.findAllByUser(user);
     }
 
     public Basket findOne(Long basketId) {
-        return basketRepository.findOne(basketId);
+        return basketRepository.findById(basketId).orElse(null);
     }
 
     @Transactional

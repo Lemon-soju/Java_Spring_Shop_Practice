@@ -28,7 +28,7 @@ public class BasketController {
 
     @GetMapping("/basket")
     public String list(@SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser, Model model) {
-        List<Basket> baskets = basketService.findBaskets(loginUser.getId());
+        List<Basket> baskets = basketService.findBaskets(loginUser);
         model.addAttribute("baskets", baskets);
         return "basket/basketList";
     }
