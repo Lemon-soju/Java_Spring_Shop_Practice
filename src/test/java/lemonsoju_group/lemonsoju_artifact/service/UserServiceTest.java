@@ -1,7 +1,8 @@
 package lemonsoju_group.lemonsoju_artifact.service;
 
 import lemonsoju_group.lemonsoju_artifact.domain.User;
-import lemonsoju_group.lemonsoju_artifact.repository.UserRepository;
+import lemonsoju_group.lemonsoju_artifact.repository.UserDataRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,10 +16,11 @@ import static org.junit.Assert.*;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @Transactional
+@Slf4j
 public class UserServiceTest {
 
     @Autowired UserService userService;
-    @Autowired UserRepository userRepository;
+    @Autowired UserDataRepository userRepository;
 
     @Test
     @Rollback(value = false)
@@ -31,7 +33,7 @@ public class UserServiceTest {
         Long savedId = userService.join(user);
 
         //then
-        assertEquals(user, userRepository.findOne(savedId));
+        assertEquals(user, userRepository.findById(savedId).orElse(null));
         
     }
     

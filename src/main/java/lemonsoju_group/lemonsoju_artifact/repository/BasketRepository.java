@@ -16,12 +16,8 @@ public class BasketRepository {
     private final EntityManager em;
 
     public void save(Basket basket) {
-    if (basket.getId() == null) {
         em.persist(basket);
-    } else {
-        em.merge(basket);
     }
-}
 
     public List<Basket> findAll() {
         return em.createQuery("select b from Basket b", Basket.class).getResultList();
