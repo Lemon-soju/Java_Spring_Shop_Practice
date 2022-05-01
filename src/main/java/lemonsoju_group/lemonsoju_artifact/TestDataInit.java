@@ -2,10 +2,7 @@ package lemonsoju_group.lemonsoju_artifact;
 
 import lemonsoju_group.lemonsoju_artifact.domain.Basket;
 import lemonsoju_group.lemonsoju_artifact.domain.Item;
-import lemonsoju_group.lemonsoju_artifact.domain.OrderItem;
 import lemonsoju_group.lemonsoju_artifact.domain.User;
-import lemonsoju_group.lemonsoju_artifact.repository.ItemRepository;
-import lemonsoju_group.lemonsoju_artifact.repository.UserRepository;
 import lemonsoju_group.lemonsoju_artifact.service.BasketService;
 import lemonsoju_group.lemonsoju_artifact.service.ItemService;
 import lemonsoju_group.lemonsoju_artifact.service.OrderService;

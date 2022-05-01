@@ -1,7 +1,7 @@
 package lemonsoju_group.lemonsoju_artifact.service;
 
 import lemonsoju_group.lemonsoju_artifact.domain.User;
-import lemonsoju_group.lemonsoju_artifact.repository.UserRepository;
+import lemonsoju_group.lemonsoju_artifact.repository.UserDataRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -18,7 +18,7 @@ import static java.lang.Boolean.TRUE;
 @Slf4j
 public class UserService {
 
-    private final UserRepository userRepository;
+    private final UserDataRepository userRepository;
 
     /**
      * 회원 가입 ==============> 이후 회원이 이미 존재할 경우 코드 구현할 예정
@@ -45,7 +45,7 @@ public class UserService {
     }
 
     public User findOne(Long userId){
-        return userRepository.findOne(userId);
+        return userRepository.findById(userId).orElse(null);
     }
 
 

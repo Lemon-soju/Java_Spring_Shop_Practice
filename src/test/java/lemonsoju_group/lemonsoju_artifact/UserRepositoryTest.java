@@ -2,7 +2,7 @@ package lemonsoju_group.lemonsoju_artifact;
 
 
 import lemonsoju_group.lemonsoju_artifact.domain.User;
-import lemonsoju_group.lemonsoju_artifact.repository.UserRepository;
+import lemonsoju_group.lemonsoju_artifact.repository.UserDataRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -17,7 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserRepositoryTest {
 
     @Autowired
-    UserRepository userRepository;
+    UserDataRepository userRepository;
 
     @Test
     @Transactional
@@ -28,8 +28,8 @@ public class UserRepositoryTest {
         user.setName("lemon01");
 
         //when
-        Long savedId = userRepository.save(user);
-        User findUser = userRepository.findOne(savedId);
+        Long savedId = userRepository.save(user).getId();
+        User findUser = userRepository.findById(savedId).orElse(null);
 
         //then
         Assertions.assertThat(findUser.getId()).isEqualTo(user.getId());

@@ -2,9 +2,8 @@ package lemonsoju_group.lemonsoju_artifact.service;
 
 import lemonsoju_group.lemonsoju_artifact.domain.*;
 import lemonsoju_group.lemonsoju_artifact.repository.BasketRepository;
-import lemonsoju_group.lemonsoju_artifact.repository.ItemRepository;
-import lemonsoju_group.lemonsoju_artifact.repository.OrderRepository;
-import lemonsoju_group.lemonsoju_artifact.repository.UserRepository;
+import lemonsoju_group.lemonsoju_artifact.repository.ItemDataRepository;
+import lemonsoju_group.lemonsoju_artifact.repository.UserDataRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -20,8 +19,8 @@ import java.util.Optional;
 public class BasketService {
 
     private final BasketRepository basketRepository;
-    private final UserRepository userRepository;
-    private final ItemRepository itemRepository;
+    private final UserDataRepository userRepository;
+    private final ItemDataRepository itemRepository;
 
     /**
      * 장바구니 추가
@@ -31,14 +30,13 @@ public class BasketService {
     public void addBasket(Long userId, Long itemId){
 
         Optional<Basket> findBasket = basketRepository.findOneByItem(itemId);
-        User user = userRepository.findOne(userId);
-        Item item = itemRepository.findOne(itemId);
+        User user = userRepository.findById(userId).orElse(null);
+        Item item = itemRepository.findById(itemId).orElse(null);
 
         if (!findBasket.isEmpty()){
-            Basket basket = findBasket.get();
+            Basket basket = findBasket.orElse(null);
             int count = basket.getCount() + 1;
             basket.setCount(count);
-            basketRepository.save(basket);
         }
         else {
             Basket basket = Basket.createBasket(user, item, item.getPrice(), 1);
