@@ -29,7 +29,7 @@ public class BasketService {
     @Transactional
     public void addBasket(Long userId, Long itemId){
 
-        Optional<Basket> findBasket = basketRepository.findOneByItem(itemId);
+        Optional<Basket> findBasket = basketRepository.findOneByItemAndUser(userId, itemId);
         User user = userRepository.findById(userId).orElse(null);
         Item item = itemRepository.findById(itemId).orElse(null);
 
@@ -44,8 +44,8 @@ public class BasketService {
         }
     }
 
-    public List<Basket> findBaskets() {
-        return basketRepository.findAll();
+    public List<Basket> findBaskets(Long userId) {
+        return basketRepository.findAllByUser(userId);
     }
 
     public Basket findOne(Long basketId) {

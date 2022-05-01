@@ -23,13 +23,20 @@ public class BasketRepository {
         return em.createQuery("select b from Basket b", Basket.class).getResultList();
     }
 
+    public List<Basket> findAllByUser(Long userId) {
+        return em.createQuery("select b from Basket b where b.user.id = :userId", Basket.class)
+                .setParameter("userId", userId)
+                .getResultList();
+    }
+
     public Basket findOne(Long id) {
         return em.find(Basket.class, id);
     }
 
-    public Optional<Basket> findOneByItem(Long id) {
-        return em.createQuery("select b from Basket b where b.item.id = :itemId", Basket.class)
-                .setParameter("itemId", id)
+    public Optional<Basket> findOneByItemAndUser(Long userId, Long itemId) {
+        return em.createQuery("select b from Basket b where b.user.id = :userId and b.item.id = :itemId", Basket.class)
+                .setParameter("userId", userId)
+                .setParameter("itemId", itemId)
                 .getResultList()
                 .stream().findFirst();
     }
