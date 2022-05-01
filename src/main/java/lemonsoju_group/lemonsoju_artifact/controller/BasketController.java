@@ -6,6 +6,7 @@ import lemonsoju_group.lemonsoju_artifact.domain.Item;
 import lemonsoju_group.lemonsoju_artifact.domain.User;
 import lemonsoju_group.lemonsoju_artifact.service.BasketService;
 import lemonsoju_group.lemonsoju_artifact.service.ItemService;
+import lemonsoju_group.lemonsoju_artifact.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -23,10 +24,11 @@ public class BasketController {
 
     private final BasketService basketService;
     private final ItemService itemService;
+    private final UserService userService;
 
     @GetMapping("/basket")
-    public String list(Model model) {
-        List<Basket> baskets = basketService.findBaskets();
+    public String list(@SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser, Model model) {
+        List<Basket> baskets = basketService.findBaskets(loginUser.getId());
         model.addAttribute("baskets", baskets);
         return "basket/basketList";
     }
