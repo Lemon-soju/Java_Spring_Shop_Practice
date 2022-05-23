@@ -66,6 +66,8 @@ public class TestDataInit {
          */
 
         orderService.order(userA.getId(), itemA.getId(), 5);
+        orderService.order(userB.getId(), itemB.getId(), 4);
+
 
         /**
          * 장바구니 추가
