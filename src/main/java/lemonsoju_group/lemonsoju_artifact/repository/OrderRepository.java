@@ -1,7 +1,14 @@
 package lemonsoju_group.lemonsoju_artifact.repository;
 
+import com.querydsl.core.types.Predicate;
+import com.querydsl.core.types.dsl.BooleanExpression;
+import com.querydsl.jpa.impl.JPAQueryFactory;
 import lemonsoju_group.lemonsoju_artifact.domain.Order;
+import lemonsoju_group.lemonsoju_artifact.domain.OrderStatus;
+import lemonsoju_group.lemonsoju_artifact.domain.QOrder;
+import lemonsoju_group.lemonsoju_artifact.domain.QUser;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
 
@@ -9,6 +16,10 @@ import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
+import static lemonsoju_group.lemonsoju_artifact.domain.QOrder.*;
+import static lemonsoju_group.lemonsoju_artifact.domain.QUser.*;
+
+@Slf4j
 @Repository
 @RequiredArgsConstructor
 public class OrderRepository {
@@ -23,40 +34,25 @@ public class OrderRepository {
         return em.find(Order.class, id);
     }
 
-
-    // 이후 수정할 예정
     public List<Order> findAllByString(OrderSearch orderSearch) {
-        //language=JPAQL
-        String jpql = "select o From Order o join o.user m";
-        boolean isFirstCondition = true;
-        //주문 상태 검색
-        if (orderSearch.getOrderStatus() != null) {
-            if (isFirstCondition) {
-                jpql += " where";
-                isFirstCondition = false;
-            } else {
-                jpql += " and";
-            }
-            jpql += " o.status = :status";
-        }
-        //회원 이름 검색
-        if (StringUtils.hasText(orderSearch.getUserName())) {
-            if (isFirstCondition) {
-                jpql += " where";
-                isFirstCondition = false;
-            } else {
-                jpql += " and";
-            }
-            jpql += " m.name like :name";
-        }
-        TypedQuery<Order> query = em.createQuery(jpql, Order.class)
-                .setMaxResults(1000); //최대 1000건
-        if (orderSearch.getOrderStatus() != null) {
-            query = query.setParameter("status", orderSearch.getOrderStatus());
-        }
-        if (StringUtils.hasText(orderSearch.getUserName())) {
-            query = query.setParameter("name", orderSearch.getUserName());
-        }
-        return query.getResultList();
+
+        JPAQueryFactory queryFactory = new JPAQueryFactory(em);
+
+        return queryFactory
+                .selectFrom(order)
+                .join(order.user, user)
+                .where(
+                        orderStatusEq(orderSearch.getOrderStatus()),
+                        nameLike(orderSearch.getUserName()))
+                .limit(1000)
+                .fetch();
+    }
+
+    private BooleanExpression orderStatusEq(OrderStatus orderStatusCond){
+        return orderStatusCond == null ? null : order.status.eq(orderStatusCond);
+    }
+
+    private BooleanExpression nameLike(String nameCond){
+        return !StringUtils.hasText(nameCond) ? null : user.name.like(nameCond);
     }
 }
